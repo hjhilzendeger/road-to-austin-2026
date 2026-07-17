@@ -3,9 +3,12 @@ import { drivers } from './data/drivers.js'
 import { teams } from './data/teams.js'
 import { races } from './data/races.js'
 import { results } from './data/results.js'
+import { calculateStandings } from './utils/standings.js'
 
 const getTeam = (teamName) =>
   teams.find(team => team.name === teamName)
+
+const standings = calculateStandings(results)
 
 document.querySelector('#app').innerHTML = `
   <div class="app">
@@ -72,6 +75,31 @@ ${races.map(race => `
 `).join('')}
 
 </section>
+
+<section class="cards">
+
+  <div class="card">
+
+    <h2>🏆 Driver Championship</h2>
+
+    ${standings.map((driver, index) => `
+
+      <p>
+        ${index === 0 ? "🥇" :
+          index === 1 ? "🥈" :
+          "🥉"}
+
+        ${driver.driver}
+        —
+        ${driver.points} pts
+      </p>
+
+    `).join('')}
+
+  </div>
+
+</section>
+
 <section class="hero" id="race-results">
 
   <h2>🏆 Race Results</h2>
