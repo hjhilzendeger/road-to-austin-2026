@@ -4,6 +4,7 @@ import { teams } from './data/teams.js'
 import { races } from './data/races.js'
 import { results } from './data/results.js'
 import { calculateStandings } from './utils/standings.js'
+import { calculateConstructorStandings } from './utils/constructors.js'
 
 const getTeam = (teamName) =>
   teams.find(team => team.name === teamName)
@@ -16,6 +17,14 @@ const standings = calculateStandings(
   results,
   selectedRace.id
 );
+
+const constructorStandings =
+  calculateConstructorStandings(
+    results,
+    drivers,
+    selectedRace.id
+  );
+
 
 document.querySelector('#app').innerHTML = `
   <div class="app">
@@ -85,11 +94,11 @@ ${races.map(race => `
 
 <section class="cards">
 
-  <div class="card">
+<div class="card">
 
-  <h2>🏆 Driver Championship</h2>
+ <h2>🏆 Driver Championship</h2>
 
-<select id="race-selector">
+ <select id="race-selector">
 
 ${races
   .filter(race => race.completed)
@@ -119,6 +128,32 @@ ${standings.map((driver, index) => `
   </p>
 
 `).join('')}
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🏢 Constructor Championship</h2>
+
+<div id="constructor-list">
+
+${constructorStandings.map((team, index) => `
+
+  <p>
+    ${index === 0 ? "🥇" :
+      index === 1 ? "🥈" :
+      "🥉"}
+
+    ${team.team}
+    —
+    ${team.points} pts
+  </p>
+
+`).join('')}
+
+</div>
 
 </div>
 
@@ -190,6 +225,15 @@ document
     );
 
 
+
+const newConstructorStandings =
+  calculateConstructorStandings(
+    results,
+    drivers,
+    raceId
+  );
+
+
     document.querySelector('#standings-list')
       .innerHTML = newStandings.map((driver, index) => `
 
@@ -205,4 +249,20 @@ document
 
       `).join('');
 
+      document.querySelector('#constructor-list')
+  .innerHTML = newConstructorStandings.map((team, index) => `
+
+    <p>
+      ${index === 0 ? "🥇" :
+        index === 1 ? "🥈" :
+        "🥉"}
+
+      ${team.team}
+      —
+      ${team.points} pts
+    </p>
+
+  `).join('');
+
   });
+
