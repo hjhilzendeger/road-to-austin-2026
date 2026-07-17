@@ -8,7 +8,14 @@ import { calculateStandings } from './utils/standings.js'
 const getTeam = (teamName) =>
   teams.find(team => team.name === teamName)
 
-const standings = calculateStandings(results)
+const selectedRace = races.find(
+  race => race.completed
+);
+
+const standings = calculateStandings(
+  results,
+  selectedRace.id
+);
 
 document.querySelector('#app').innerHTML = `
   <div class="app">
@@ -80,23 +87,40 @@ ${races.map(race => `
 
   <div class="card">
 
-    <h2>🏆 Driver Championship</h2>
+  <h2>🏆 Driver Championship</h2>
 
-    ${standings.map((driver, index) => `
+<select id="race-selector">
 
-      <p>
-        ${index === 0 ? "🥇" :
-          index === 1 ? "🥈" :
-          "🥉"}
+${races
+  .filter(race => race.completed)
+  .map(race => `
 
-        ${driver.driver}
-        —
-        ${driver.points} pts
-      </p>
+    <option value="${race.id}">
+      Round ${race.round}: ${race.name}
+    </option>
 
-    `).join('')}
+  `).join('')}
 
-  </div>
+</select>
+
+
+<div id="standings-list">
+
+${standings.map((driver, index) => `
+
+  <p>
+    ${index === 0 ? "🥇" :
+      index === 1 ? "🥈" :
+      "🥉"}
+
+    ${driver.driver}
+    —
+    ${driver.points} pts
+  </p>
+
+`).join('')}
+
+</div>
 
 </section>
 
@@ -154,3 +178,31 @@ document.querySelectorAll('.race-card')
   });
 
 });
+document
+  .querySelector('#race-selector')
+  .addEventListener('change', (event) => {
+
+    const raceId = Number(event.target.value);
+
+    const newStandings = calculateStandings(
+      results,
+      raceId
+    );
+
+
+    document.querySelector('#standings-list')
+      .innerHTML = newStandings.map((driver, index) => `
+
+        <p>
+          ${index === 0 ? "🥇" :
+            index === 1 ? "🥈" :
+            "🥉"}
+
+          ${driver.driver}
+          —
+          ${driver.points} pts
+        </p>
+
+      `).join('');
+
+  });

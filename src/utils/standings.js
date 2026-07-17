@@ -1,8 +1,13 @@
-export function calculateStandings(results) {
+export function calculateStandings(results, upToRace = null) {
 
   const standings = {};
 
-  results.forEach(race => {
+  const racesToInclude = upToRace
+    ? results.filter(race => race.raceId <= upToRace)
+    : results;
+
+
+  racesToInclude.forEach(race => {
 
     race.results.forEach(result => {
 
