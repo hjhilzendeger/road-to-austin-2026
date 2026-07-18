@@ -4,7 +4,7 @@ export const races = [
     name: "Australian Grand Prix",
     location: "Melbourne",
     round: 1,
-    completed: true
+    completed: true,
     sprint: false
   },
   {
@@ -12,7 +12,7 @@ export const races = [
     name: "Japanese Grand Prix",
     location: "Suzuka",
     round: 2,
-    completed: true
+    completed: true,
     sprint: false
   },
 {
@@ -28,7 +28,7 @@ export const races = [
     name: "United States Grand Prix",
     location: "Austin, Texas",
     round: 4,
-    completed: false
+    completed: false,
       sprint: false
   }
 ];

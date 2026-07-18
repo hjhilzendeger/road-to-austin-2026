@@ -1,26 +1,30 @@
-export function calculateStandings(results, upToRace = null) {
+export function calculateStandings(weekends, upToRace = null) {
 
   const standings = {};
 
-  const racesToInclude = upToRace
-    ? results.filter(race => race.raceId <= upToRace)
-    : results;
+  const weekendsToInclude = upToRace
+    ? weekends.filter(weekend => weekend.raceId <= upToRace)
+    : weekends;
 
+  weekendsToInclude.forEach(weekend => {
 
-  racesToInclude.forEach(race => {
+    weekend.sessions.forEach(session => {
 
-    race.results.forEach(result => {
+      if (!session.completed) return;
 
-      if (!standings[result.driver]) {
-        standings[result.driver] = 0;
-      }
+      session.results.forEach(result => {
 
-      standings[result.driver] += result.points;
+        if (!standings[result.driver]) {
+          standings[result.driver] = 0;
+        }
+
+        standings[result.driver] += result.points;
+
+      });
 
     });
 
   });
-
 
   return Object.entries(standings)
     .map(([driver, points]) => ({

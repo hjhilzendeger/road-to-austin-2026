@@ -3,7 +3,10 @@ import './style.css'
 import { drivers } from './data/drivers.js'
 import { teams } from './data/teams.js'
 import { races } from './data/races.js'
+
+import { weekends } from './data/weekends.js'
 import { results } from './data/results.js'
+
 import { calculateStandings } from './utils/standings.js'
 import { calculateConstructorStandings } from './utils/constructors.js'
 
@@ -22,7 +25,7 @@ const selectedRace = races.find(
 );
 
 const standings = calculateStandings(
-  results,
+  weekends,
   selectedRace.id
 );
 
