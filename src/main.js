@@ -9,6 +9,7 @@ import { calculateConstructorStandings } from './utils/constructors.js'
 
 import { Header } from './components/Header.js'
 import { DriverStandings } from './components/DriverStandings.js'
+import { ConstructorStandings } from './components/ConstructorStandings.js'
 
 
 const getTeam = (teamName) =>
@@ -98,29 +99,7 @@ ${races.map(race => `
 
 ${DriverStandings(standings, races)}
 
-<div class="card">
-
-<h2>🏢 Constructor Championship</h2>
-
-<div id="constructor-list">
-
-${constructorStandings.map((team, index) => `
-
-  <p>
-    ${index === 0 ? "🥇" :
-      index === 1 ? "🥈" :
-      "🥉"}
-
-    ${team.team}
-    —
-    ${team.points} pts
-  </p>
-
-`).join('')}
-
-</div>
-
-</div>
+${ConstructorStandings(constructorStandings)}
 
 </section>
 
