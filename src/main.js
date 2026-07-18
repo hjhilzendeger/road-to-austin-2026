@@ -5,7 +5,11 @@ import { races } from './data/races.js'
 import { results } from './data/results.js'
 import { calculateStandings } from './utils/standings.js'
 import { calculateConstructorStandings } from './utils/constructors.js'
+
+
 import { Header } from './components/Header.js'
+import { DriverStandings } from './components/DriverStandings.js'
+
 
 const getTeam = (teamName) =>
   teams.find(team => team.name === teamName)
@@ -92,44 +96,7 @@ ${races.map(race => `
 
 <section class="cards">
 
-<div class="card">
-
- <h2>🏆 Driver Championship</h2>
-
- <select id="race-selector">
-
-${races
-  .filter(race => race.completed)
-  .map(race => `
-
-    <option value="${race.id}">
-      Round ${race.round}: ${race.name}
-    </option>
-
-  `).join('')}
-
-</select>
-
-
-<div id="standings-list">
-
-${standings.map((driver, index) => `
-
-  <p>
-    ${index === 0 ? "🥇" :
-      index === 1 ? "🥈" :
-      "🥉"}
-
-    ${driver.driver}
-    —
-    ${driver.points} pts
-  </p>
-
-`).join('')}
-
-</div>
-
-</div>
+${DriverStandings(standings, races)}
 
 <div class="card">
 
