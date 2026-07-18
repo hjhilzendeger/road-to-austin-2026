@@ -5,6 +5,7 @@ import { races } from './data/races.js'
 import { results } from './data/results.js'
 import { calculateStandings } from './utils/standings.js'
 import { calculateConstructorStandings } from './utils/constructors.js'
+import { Header } from './components/Header.js'
 
 const getTeam = (teamName) =>
   teams.find(team => team.name === teamName)
@@ -29,10 +30,7 @@ const constructorStandings =
 document.querySelector('#app').innerHTML = `
   <div class="app">
 
-    <header>
-      <h1>🏁 Road to Austin 2026</h1>
-      <p>Formula 1 Season Companion</p>
-    </header>
+${Header()}
 
     <main>
 
