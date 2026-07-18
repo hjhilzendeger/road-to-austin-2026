@@ -1,3 +1,4 @@
+
 import './style.css'
 import { drivers } from './data/drivers.js'
 import { teams } from './data/teams.js'
@@ -10,6 +11,7 @@ import { calculateConstructorStandings } from './utils/constructors.js'
 import { Header } from './components/Header.js'
 import { DriverStandings } from './components/DriverStandings.js'
 import { ConstructorStandings } from './components/ConstructorStandings.js'
+import { RaceResults } from './components/RaceResults.js'
 
 
 const getTeam = (teamName) =>
@@ -103,26 +105,23 @@ ${ConstructorStandings(constructorStandings)}
 
 </section>
 
-<section class="hero" id="race-results">
-
-  <h2>🏆 Race Results</h2>
-
-  <p>
-    Select a completed race to view results.
-  </p>
-
-</section>
+${RaceResults()}
 
     </main>
 
   </div>
-`
+  
+  `
+
+
 document.querySelectorAll('.race-card')
 .forEach(card => {
 
   card.addEventListener('click', () => {
 
     const raceId = Number(card.dataset.race);
+
+    console.log("Clicked race:", raceId);
 
     const raceResult = results.find(
       result => result.raceId === raceId
@@ -209,4 +208,3 @@ const newConstructorStandings =
   `).join('');
 
   });
-
