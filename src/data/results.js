@@ -1,6 +1,9 @@
 export const results = [
   {
     raceId: 1,
+
+    sprintResults: [],
+
     results: [
       {
         driver: "Alex Carter",
@@ -22,6 +25,9 @@ export const results = [
 
   {
     raceId: 2,
+    
+    sprintResults: [],
+
     results: [
       {
         driver: "Marco Silva",
