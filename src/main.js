@@ -5,7 +5,6 @@ import { teams } from './data/teams.js'
 import { races } from './data/races.js'
 
 import { weekends } from './data/weekends.js'
-import { results } from './data/results.js'
 
 import { calculateStandings } from './utils/standings.js'
 import { calculateConstructorStandings } from './utils/constructors.js'
@@ -31,7 +30,7 @@ const standings = calculateStandings(
 
 const constructorStandings =
   calculateConstructorStandings(
-    results,
+    weekends,
     drivers,
     selectedRace.id
   );
@@ -126,19 +125,28 @@ document.querySelectorAll('.race-card')
 
     console.log("Clicked race:", raceId);
 
-    const raceResult = results.find(
-      result => result.raceId === raceId
-    );
+    const weekend = weekends.find(
+       weekend => weekend.raceId === raceId
+   );
+   const panel = document.querySelector('#race-results');
 
-    const panel = document.querySelector('#race-results');
+   if (weekend) {
 
-    if (raceResult) {
+     panel.innerHTML = `
 
-      panel.innerHTML = `
+       <h2>🏆 Race Results</h2>
 
-        <h2>🏆 Race Results</h2>
+      ${weekend.sessions
+        .filter(session => session.completed)
+        .map(session => `
 
-        ${raceResult.results.map(result => `
+        <h3>
+          ${session.type === "sprint"
+            ? "⚡ Sprint"
+            : "🏁 Grand Prix"}
+        </h3>
+
+        ${session.results.map(result => `
 
           <p>
             ${result.position === 1 ? "🥇" :
@@ -152,9 +160,12 @@ document.querySelectorAll('.race-card')
 
         `).join('')}
 
-      `;
+      `).join('')}
 
-    }
+  `;
+
+}
+
 
   });
 
@@ -166,15 +177,13 @@ document
     const raceId = Number(event.target.value);
 
     const newStandings = calculateStandings(
-      results,
-      raceId
-    );
-
-
+  weekends,
+  raceId
+);
 
 const newConstructorStandings =
   calculateConstructorStandings(
-    results,
+    weekends,
     drivers,
     raceId
   );

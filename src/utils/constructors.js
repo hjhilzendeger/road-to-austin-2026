@@ -1,38 +1,45 @@
 export function calculateConstructorStandings(
-  results,
+  weekends,
   drivers,
   upToRace = null
 ) {
 
   const standings = {};
 
-  const racesToInclude = upToRace
-    ? results.filter(race => race.raceId <= upToRace)
-    : results;
+  // Create a lookup table for drivers
+  const driverLookup = {};
 
+  drivers.forEach(driver => {
+    driverLookup[driver.name] = driver;
+  });
 
-  racesToInclude.forEach(race => {
+  const weekendsToInclude = upToRace
+    ? weekends.filter(weekend => weekend.raceId <= upToRace)
+    : weekends;
 
-    race.results.forEach(result => {
+  weekendsToInclude.forEach(weekend => {
 
-      const driver = drivers.find(
-        driver => driver.name === result.driver
-      );
+    weekend.sessions.forEach(session => {
 
-      if (!driver) return;
+      if (!session.completed) return;
 
+      session.results.forEach(result => {
 
-      if (!standings[driver.team]) {
-        standings[driver.team] = 0;
-      }
+        const driver = driverLookup[result.driver];
 
+        if (!driver) return;
 
-      standings[driver.team] += result.points;
+        if (!standings[driver.team]) {
+          standings[driver.team] = 0;
+        }
+
+        standings[driver.team] += result.points;
+
+      });
 
     });
 
   });
-
 
   return Object.entries(standings)
     .map(([team, points]) => ({
