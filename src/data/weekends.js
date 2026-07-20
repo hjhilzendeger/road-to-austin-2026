@@ -8,7 +8,13 @@ export const weekends = [
       {
         type: "grand-prix",
 
-        completed: true,
+         completed: true,
+
+         pole: "Alex Carter",
+
+         fastestLap: "Marco Silva",
+
+         driverOfTheDay: "Alex Carter",
 
         results: [
           {
@@ -43,7 +49,13 @@ export const weekends = [
       {
         type: "grand-prix",
 
-        completed: true,
+       completed: true,
+
+       pole: "Marco Silva",
+
+       fastestLap: "Oliver Stone",
+
+       driverOfTheDay: "Marco Silva",
 
         results: [
           {
@@ -70,23 +82,58 @@ export const weekends = [
   },
 
 
-  {
-    raceId: 3,
+{
+  raceId: 3,
 
-    sessions: [
+  sessions: [
 
-      {
-        type: "grand-prix",
+    {
+      type: "sprint",
 
-        completed: false,
+    completed: true,
 
-        results: []
+     pole: null,
 
-      }
+     fastestLap: "Alex Carter",
 
-    ]
+     driverOfTheDay: "Marco Silva",
 
-  },
+      results: [
+
+        {
+          driver: "Alex Carter",
+          position: 1,
+          points: 8
+        },
+
+        {
+          driver: "Marco Silva",
+          position: 2,
+          points: 7
+        },
+
+        {
+          driver: "Oliver Stone",
+          position: 3,
+          points: 6
+        }
+
+      ]
+
+    },
+
+    {
+      type: "grand-prix",
+
+      completed: false,
+
+      results: []
+
+    }
+
+  ]
+
+},
 
   {
     raceId: 4,

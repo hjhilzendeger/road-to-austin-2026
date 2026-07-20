@@ -13,8 +13,11 @@ import { calculateConstructorStandings } from './utils/constructors.js'
 import { Header } from './components/Header.js'
 import { DriverStandings } from './components/DriverStandings.js'
 import { ConstructorStandings } from './components/ConstructorStandings.js'
-import { RaceResults } from './components/RaceResults.js'
 
+import {
+  RaceResults,
+  renderSession
+} from './components/RaceResults.js'
 
 const getTeam = (teamName) =>
   teams.find(team => team.name === teamName)
@@ -138,29 +141,9 @@ document.querySelectorAll('.race-card')
 
       ${weekend.sessions
         .filter(session => session.completed)
-        .map(session => `
+       .map(session => renderSession(session))
+       .join("")}
 
-        <h3>
-          ${session.type === "sprint"
-            ? "⚡ Sprint"
-            : "🏁 Grand Prix"}
-        </h3>
-
-        ${session.results.map(result => `
-
-          <p>
-            ${result.position === 1 ? "🥇" :
-              result.position === 2 ? "🥈" :
-              "🥉"}
-
-            ${result.driver}
-            —
-            ${result.points} points
-          </p>
-
-        `).join('')}
-
-      `).join('')}
 
   `;
 
